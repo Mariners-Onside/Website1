@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Core Media Members</title>
+  <style>
+    /* Loader styles */
+    #loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:linear-gradient(180deg,#001217,#021421);z-index:99999;color:#cffff0}
+    .spinner{width:72px;height:72px;border-radius:50%;border:8px solid rgba(255,255,255,0.08);border-top-color:#00ff9a;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loader-text{margin-top:12px;font-weight:800}
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background:radial-gradient(circle at top, #2b0c15 0%, #0b0f14 45%, #05070a 100%);
+      min-height:100vh;
+      padding:40px 20px 60px;
+      color:#f4f5f7;
+    }
+    h1 { text-align:center; color:#fff; margin-bottom:36px; font-size:2.8rem; letter-spacing:1px; text-shadow:0 4px 18px rgba(0,0,0,0.35); }
+    .container { max-width:1240px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; }
+    .card {
+      background:rgba(255,255,255,0.95);
+      color:#1f2937;
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:0 18px 45px rgba(0,0,0,0.28);
+      transition:transform .28s ease, box-shadow .28s ease;
+      border:1px solid rgba(255,255,255,0.2);
+      position:relative;
+    }
+    .card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, rgba(255,255,255,0.12), transparent 55%); pointer-events:none; }
+    .card:hover { transform:translateY(-8px) scale(1.01); box-shadow:0 24px 55px rgba(0,0,0,0.34); }
+    .card img { width:100%; height:290px; object-fit:cover; object-position:center; display:block; border-bottom:3px solid #b91c1c; }
+    .card-content { padding:22px 20px 24px; text-align:center; }
+    .card h2 { font-size:1.35rem; margin-bottom:8px; color:#111827; }
+    .card h3 { font-size:1rem; color:#b91c1c; margin-bottom:12px; font-weight:700; letter-spacing:.4px; text-transform:uppercase; }
+    .card p { font-size:0.95rem; line-height:1.65; color:#4b5563; }
+    .placeholder-img { background:linear-gradient(135deg,#f59e0b,#dc2626); display:flex; align-items:center; justify-content:center; font-size:3rem; color:#fff; font-weight:bold; height:290px; }
+    .badge { display:inline-block; padding:6px 10px; border-radius:999px; background:#111827; color:#fff; font-size:.76rem; margin-bottom:14px; letter-spacing:.6px; }
+    @media (max-width: 600px) { h1 { font-size:2.2rem; } .card img, .placeholder-img { height:250px; } }
+  </style>
+</head>
+<body>
+
+  <div id="loader-overlay" aria-hidden="false">
+    <div class="spinner" role="img" aria-label="Loading"></div>
+    <div class="loader-text">Loading...</div>
+  </div>
+
+  <h1>Meet Our Amazing Media Committe Team</h1>
+
+  <div class="container" id="team-container">
+  </div>
+
+  <script>
+    const teamMembers = [
+      {
+        name: "Rahul Mondal",
+        position: "Head of The Media",
+        photo: "ra11.jpg",
+        bio: "The Creative Head Of the Media leads the visual design efforts of the fan club, creating eye-catching posters and graphics for events, announcements, and social media. With a strong sense of creativity and style, they ensure the club’s visual identity remains vibrant, appealing, and aligned with its spirit."
+      },
+      {
+        name: "Sagar Haldar",
+        position: "Joint Head Of The Media",
+        photo: "sa12.jpg",
+        bio: "The Creative Head Of the Media brings the fan club’s moments to life by producing engaging and high-quality video content. They handle editing, visual effects, and storytelling, ensuring every video reflects the club’s energy and connects strongly with its members and supporters."
+      },
+      {
+        name: "Kanakendu Das",
+        position: "Media Manager",
+        photo: "k1.jpg",
+        bio: "Kanakendu Das serves as the Assistant Web Manager of the fan club, supporting the smooth running of the website and its digital content. He helps maintain updates, ensures functionality, and works closely with the web team to enhance user experience and strengthen the club’s online presence."
+      },
+      {
+        name: "Nur Alam Molla",
+        position: "Joint Media-Manager",
+        photo: "Mm11.jpeg",
+        bio: "Kanakendu Das serves as the Assistant Web Manager of the fan club, supporting the smooth running of the website and its digital content. He helps maintain updates, ensures functionality, and works closely with the web team to enhance user experience and strengthen the club’s online presence."
+      },
+      {
+        name: "Ramananda Jana",
+        position: "Assistant Media-Manager",
+        photo: "ra12.jpg",
+        bio: "The Editor contributes to the fan club by preparing, refining, and organizing written content for publications and digital platforms. They ensure clarity, accuracy, and consistency in all communications, helping maintain the club’s professional and engaging voice across media."
+      },
+      {
+        name: "Shivam Yadav",
+        position: "Media Supervisor",
+        photo: "sh11.jpg",
+        bio: "The Media Supervisor oversees the production and management of media content for the fan club. They ensure that all media assets are of high quality and align with the club’s branding and messaging, contributing to a cohesive and engaging experience for members and supporters."
+      },
+      {
+        name: "Subhadeep Chatterjee",
+        position: "Faceook Admin and Photographer",
+        photo: "p11.jpg",
+        bio: "Subhadeep Chatterjee is the current President of the Mariners Onside and the co-ordinator of the Media Team bringing 2 years of field experience in  to the role. Passionate about works to ensure the club provides a welcoming and impactful experience for all members."
+      },
+      {
+        name: "Anandarup Bandyopadhyay",
+        position: "Instagram Admin",
+        photo: "c3.jpg",
+        bio: "Anandrup Bandhopadhay serves as the Secretary of the fans club, ensuring smooth communication, efficient coordination, and timely execution of all administrative duties. Known for his discipline and dedication, he manages documentation, supports event planning, and helps maintain strong connections among members."
+      },
+      {
+        name: "Subham Singh",
+        position: "Video Editor",
+        photo: "SS12.jpeg",
+        bio: "Subham Singh serves as the Video Editor of the fan club, responsible for creating and editing visual content that showcases the club’s spirit and activities. His technical skills and creative vision help produce compelling videos that engage fans and promote the club."
+      },
+      {
+        name: "Prithul Bhattacharjee",
+        position: "Research and Content Head",
+        photo: "pr1.jpg",
+        bio: "Prithul is a dedicated Research Head and Content Writer known for their expertise in sports history and archival documentation, with a primary focus on one of India's most iconic football institutions, Mohun Bagan."
+      },
+
+      {
+        name: "Krishnendu Karmakar",
+        position: "Media Researcher and Content Writer",
+        photo: "B11.jpeg",
+        bio: "Krishnendu Karmakar serves as the Media Researcher and Content Writer of the fan club, leading the club’s digital presence with precision and creativity. He oversees website updates, manages content flow, and ensures a smooth, engaging user experience. His technical expertise and dedication help strengthen the club’s online identity and reach."
+      },
+
+      {
+        name: "Sarthak Sengupta",
+        position: "Whatsapp Channel Admin",
+        photo: "Sa11.jpeg",
+        bio: "Sarthak Sengupta is a dedicated Whatsapp Channel Admin, supporting financial planning, budgeting, and transparent fund management. Known for his reliability and attention to detail, he helps ensure smooth financial operations and maintains accountability within the organization."
+      },
+
+      {
+        name: "Debraj Paria",
+        position: "Editor",
+        photo: "de12.jpg",
+        bio: "The Editor contributes to the fan club by preparing, refining, and organizing written content for publications and digital platforms. They ensure clarity, accuracy, and consistency in all communications, helping maintain the club’s professional and engaging voice across media."
+      },
+      {
+        name: "Antaran Adhwaryu",
+        position: "Editor",
+        photo: "aa11.jpeg",
+        bio: "The Editor contributes to the fan club by preparing, refining, and organizing written content for publications and digital platforms. They ensure clarity, accuracy, and consistency in all communications, helping maintain the club’s professional and engaging voice across media."
+      },
+      {
+        name: "Sutanu Pramanik",
+        position: "Editor",
+        photo: "Su12.jpeg",
+        bio: "The Editor contributes to the fan club by preparing, refining, and organizing written content for publications and digital platforms. They ensure clarity, accuracy, and consistency in all communications, helping maintain the club’s professional and engaging voice across media."
+      },
+      {
+        name: "Jayashree Das",
+        position: "Editor",
+        photo: "Ja12.jpeg",
+        bio: "The Editor contributes to the fan club by preparing, refining, and organizing written content for publications and digital platforms. They ensure clarity, accuracy, and consistency in all communications, helping maintain the club’s professional and engaging voice across media."
+      },
+    ];
+
+    // Generate cards dynamically
+    const container = document.getElementById('team-container');
+
+    teamMembers.forEach(member => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      card.innerHTML = `
+        ${member.photo 
+          ? `<img src="${member.photo}" alt="${member.name}">`
+          : `<div class="placeholder-img">${member.name.charAt(0)}</div>`
+        }
+        <div class="card-content">
+          <span class="badge">Media Team</span>
+          <h2>${member.name}</h2>
+          <h3>${member.position}</h3>
+          <p>${member.bio}</p>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  </script>
+
+  <script>
+    (function(){const overlay=document.getElementById('loader-overlay');const minMs=500;const start=Date.now();function hide(){const wait=Math.max(0,minMs-(Date.now()-start));setTimeout(()=>{if(!overlay) return;overlay.style.transition='opacity .4s ease';overlay.style.opacity='0';overlay.setAttribute('aria-hidden','true');setTimeout(()=>overlay.remove(),450);},wait);}if(document.readyState==='complete') hide(); else window.addEventListener('load', hide);} )();
+  </script>
+
+  <script>
+    document.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+    });
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'F12' ||
+          (event.ctrlKey && event.shiftKey && ['I', 'J', 'C'].includes(event.key.toUpperCase())) ||
+          (event.ctrlKey && event.key.toUpperCase() === 'U')) {
+        event.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+
+</html>
+
+

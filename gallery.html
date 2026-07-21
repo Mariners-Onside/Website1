@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mariners Onside - Memories</title>
+  <style>
+    /* Loader styles */
+    #loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:linear-gradient(180deg,#001217,#021421);z-index:99999;color:#cffff0}
+    .spinner{width:72px;height:72px;border-radius:50%;border:8px solid rgba(255,255,255,0.08);border-top-color:#00ff9a;animation:spin 1s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loader-text{margin-top:12px;font-weight:800}
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #1f1f1f 0%, #0e0e0e 45%, #050505 100%);
+      min-height: 100vh;
+      color: white;
+    }
+
+    /* Enhanced Hero Title Section */
+    .hero-title {
+      text-align: center;
+      padding: 90px 20px 70px;
+      position: relative;
+      background: linear-gradient(135deg, rgba(128,0,0,0.95), rgba(0,100,0,0.9));
+      margin-bottom: 40px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+    }
+
+    .main-title {
+      text-align: center;
+      font-size: 3.8rem;
+      font-weight: 900;
+      margin: 0 0 1rem;
+      color: white;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-shadow: 0 0 18px rgba(255,255,255,0.25), 0 6px 18px rgba(0,0,0,0.4);
+    }
+
+    @keyframes glowPulse {
+      from {
+        text-shadow: 
+          0 0 20px rgba(0, 255, 0, 0.6),
+          0 0 40px rgba(0, 255, 0, 0.4),
+          0 0 80px rgba(0, 255, 0, 0.3),
+          0 10px 20px rgba(0, 0, 0, 0.8);
+      }
+      to {
+        text-shadow: 
+          0 0 30px rgba(0, 255, 0, 0.8),
+          0 0 60px rgba(0, 255, 0, 0.6),
+          0 0 100px rgba(0, 255, 0, 0.5),
+          0 15px 30px rgba(0, 0, 0, 0.9);
+      }
+    }
+
+    .subtitle {
+      font-size: 1.45rem;
+      font-weight: 600;
+      color: #f4fce3;
+      margin: 20px auto 0;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+      opacity: 0.95;
+      max-width: 760px;
+      line-height: 1.7;
+    }
+
+    .subtitle span {
+      color: #00ff00;
+      font-weight: 800;
+    }
+
+    /* Zigzag Layout */
+    .zigzag-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 100px;
+    }
+
+    .zigzag-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 100px;
+      gap: 48px;
+      flex-wrap: wrap;
+      padding: 24px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 22px;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.18);
+      backdrop-filter: blur(6px);
+    }
+
+    .zigzag-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .zigzag-image {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .zigzag-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+      object-fit: cover;
+      border: 4px solid rgba(0,120,0,0.9);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .zigzag-item.last-gallery-item {
+      max-width: 760px;
+      margin: 0 auto 80px;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .zigzag-item.last-gallery-item .zigzag-image {
+      min-width: 300px;
+      max-width: 420px;
+      width: 100%;
+    }
+
+    .zigzag-item.last-gallery-item .zigzag-image img {
+      width: 100%;
+      height: auto;
+      min-height: 320px;
+      object-fit: cover;
+      object-position: center;
+      padding: 0;
+      background: transparent;
+      border: 4px solid rgba(0,120,0,0.9);
+      border-radius: 16px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+    }
+
+    .zigzag-image img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 25px 60px rgba(0, 255, 0, 0.6);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .zigzag-item:nth-child(even).reveal {
+      transform: translateX(40px);
+    }
+
+    .zigzag-item:nth-child(even).reveal.visible {
+      transform: translateX(0);
+    }
+
+    .zigzag-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    /* Glowing Headings for Memories */
+    .zigzag-text h2 {
+      margin-top: 0;
+      font-size: 2.8rem;
+      font-weight: 900;
+      color: white;
+      letter-spacing: 2px;
+      text-shadow: 
+        0 0 10px rgba(0, 255, 0, 0.5),
+        0 0 20px rgba(0, 255, 0, 0.4),
+        0 0 40px rgba(0, 255, 0, 0.3),
+        0 4px 15px rgba(0, 0, 0, 0.8);
+      animation: memoryGlow 3.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes memoryGlow {
+      from {
+        text-shadow: 
+          0 0 10px rgba(0, 255, 0, 0.5),
+          0 0 20px rgba(0, 255, 0, 0.4),
+          0 0 40px rgba(0, 255, 0, 0.3),
+          0 4px 15px rgba(0, 0, 0, 0.8);
+      }
+      to {
+        text-shadow: 
+          0 0 15px rgba(0, 255, 0, 0.7),
+          0 0 30px rgba(0, 255, 0, 0.6),
+          0 0 60px rgba(0, 255, 0, 0.5),
+          0 8px 20px rgba(0, 0, 0, 0.9);
+      }
+    }
+
+    .zigzag-text p {
+      font-size: 1.08rem;
+      line-height: 1.85;
+      color: #f3f3f3;
+      margin: 0;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 992px) {
+      .main-heading {
+        font-size: 4.2rem;
+        letter-spacing: 5px;
+      }
+      .subtitle {
+        font-size: 1.5rem;
+      }
+      .zigzag-text h2 {
+        font-size: 2.4rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        padding: 80px 20px 60px;
+      }
+      .main-heading {
+        font-size: 3.5rem;
+        letter-spacing: 3px;
+      }
+      .subtitle {
+        font-size: 1.3rem;
+      }
+      .zigzag-item,
+      .zigzag-item:nth-child(even) {
+        flex-direction: column !important;
+        text-align: center;
+      }
+      .zigzag-item {
+        margin-bottom: 80px;
+        gap: 30px;
+      }
+      .zigzag-text h2 {
+        font-size: 2.1rem;
+      }
+      .zigzag-item.last-gallery-item {
+        margin-bottom: 60px;
+        gap: 20px;
+      }
+      .zigzag-item.last-gallery-item .zigzag-image img {
+        height: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="loader-overlay" aria-hidden="false">
+    <div class="spinner" role="img" aria-label="Loading"></div>
+    <div class="loader-text">Loading...</div>
+  </div>
+
+  <!-- Enhanced Title Section -->
+  <div class="hero-title reveal">
+    <h1 class="main-title">Memories</h1>
+    <p class="subtitle">Moments that stay with us <span>forever</span> — etched in green & maroon</p>
+  </div>
+
+  <div class="zigzag-container">
+    <!-- Item 1 -->
+    <div class="zigzag-item reveal">
+      <div class="zigzag-image">
+        <img src="t1.jpg" alt="Tribute moment at VYBK">
+      </div>
+      <div class="zigzag-text">
+        <p>The tribute to Ratan Tata Sir at Vivekananda Yuba Bharati Krirangan was a heartfelt moment of respect and gratitude for a visionary who shaped modern India with integrity, compassion, and purpose. In the presence of thousands, the tribute honoured not just an industrial leader, but a humanitarian whose values extended far beyond business. The atmosphere reflected deep admiration for his commitment to nation-building, ethical leadership, and social responsibility. Paying homage at such an iconic venue symbolised how Ratan Tata Sir’s legacy resonates across generations, inspiring people to lead with humility, courage, and care for society at large.</p>
+      </div>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="zigzag-item reveal">
+      <div class="zigzag-image">
+        <img src="t2.jpg" alt="Iconic Sailboat Tifo">
+      </div>
+      <div class="zigzag-text">
+        <p>Mariners Onside standing in front of the iconic Sailboat tifo during the Ahal match was a moment that perfectly captured the pride, passion, and identity of the green-and-maroon faithful. As the magnificent tifo unfurled across the stands, symbolising Mohun Bagan’s rich heritage and fearless journey, Mariners Onside stood united, representing unwavering support and loyalty. The sight reflected the powerful bond between the club and its supporters, where history, emotion, and matchday energy came together as one. Moments like these turn a football match into a timeless memory.</p>
+      </div>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="zigzag-item reveal">
+      <div class="zigzag-image">
+        <img src="t3.JPG" alt="Unity in Green & Maroon">
+      </div>
+      <div class="zigzag-text">
+        <p>Mariners Onside – We Are Together is more than just a line; it is the spirit that defines our community. It represents unity beyond differences, strength in togetherness, and an unbreakable bond rooted in love for Mohun Bagan. Whether in celebration or challenge, on matchdays or in moments of social responsibility, Mariners Onside stands as one family, supporting each other with pride and purpose. This togetherness is our identity — voices united, hearts aligned, and everyone always standing onside for the club and for one another.</p>
+      </div>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="zigzag-item reveal">
+      <div class="zigzag-image">
+        <img src="a1.jpg" alt="Away Support at Kalinga">
+      </div>
+      <div class="zigzag-text">
+        <p>Mariners Onside at Kalinga Stadium was a proud and powerful representation of the green-and-maroon spirit beyond home soil. Carrying passion across miles, the Mariners Onside family made their presence felt with unwavering energy, chants, and unity, turning the stands into a reflection of home. Their support echoed throughout the stadium, standing firmly behind the team from kickoff to the final whistle. Moments like these highlight that Mariners Onside is not limited by geography — wherever Mohun Bagan plays, its people follow, united, loyal, and always onside.</p>
+      </div>
+    </div>
+
+    <!-- Item 5 -->
+    <div class="zigzag-item reveal">
+      <div class="zigzag-image">
+        <img src="a2.jpg" alt="Away Match Hunt">
+      </div>
+      <div class="zigzag-text">
+        <p>Mariners Onside Away Match Hunt represents the fearless passion of supporters who go the extra mile to stand beside their club, no matter the distance. It is about travelling together, planning, and turning every away game into a home-like atmosphere through chants, colours, and unity. Each away match hunt reflects commitment, brotherhood, and the determination to support Mohun Bagan beyond familiar grounds. These journeys build memories, strengthen bonds, and showcase that true support knows no boundaries.</p>
+      </div>
+    </div>
+
+    <!-- Item 6 -->
+    <div class="zigzag-item reveal">
+      <div class="zigzag-image">
+        <img src="a3.jpg" alt="On The Road Passion">
+      </div>
+      <div class="zigzag-text">
+        <p>The away match journeys of Mariners Onside are proof that passion has no limits. Travelling far, standing strong, and roaring loud — this is what it means to be part of this family. Every mile travelled, every chant raised, and every moment shared strengthens the bond that ties us all to Mohun Bagan. We don’t just support from the stands — we live it, breathe it, and carry it wherever the team goes. Forever together. Forever onside.</p>
+      </div>
+    </div>
+    <div class="zigzag-item last-gallery-item reveal">
+      <div class="zigzag-image">
+        <img src="Ti1.jpeg" alt="Tifo Hunt">
+      </div>
+      <div class="zigzag-text">
+        <p>The away match journeys of Mariners Onside are proof that passion has no limits. Travelling far, standing strong, and roaring loud — this is what it means to be part of this family. Every mile travelled, every chant raised, and every moment shared strengthens the bond that ties us all to Mohun Bagan. We don’t just support from the stands — we live it, breathe it, and carry it wherever the team goes. Forever together. Forever onside.</p>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function(){const overlay=document.getElementById('loader-overlay');const minMs=500;const start=Date.now();function hide(){const wait=Math.max(0,minMs-(Date.now()-start));setTimeout(()=>{if(!overlay) return;overlay.style.transition='opacity .4s ease';overlay.style.opacity='0';overlay.setAttribute('aria-hidden','true');setTimeout(()=>overlay.remove(),450);},wait);}if(document.readyState==='complete') hide(); else window.addEventListener('load', hide);} )();
+  </script>
+  <script>
+    const revealItems = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealItems.forEach(item => revealObserver.observe(item));
+  </script>
+
+    <footer style="background:linear-gradient(135deg,#111,#1b1b1b);padding:28px 20px;text-align:center;border-top:3px solid #006400;margin-top:40px;box-shadow:0 -8px 25px rgba(0,0,0,0.24);">
+        <p style="font-size:15px;opacity:0.95;line-height:1.8;max-width:900px;margin:0 auto;">&copy; 2026 Mariners Onside Official Store • All Rights Reserved • Passion Finds Its Home Created By • Kanakendu Das</p>
+        <p style="margin-top:8px;opacity:0.8;">Follow us on social for restocks and drops.</p>
+    </footer>
+  <script>
+    document.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+      alert('Blocked by the organization');
+    });
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'F12' ||
+          (event.ctrlKey && event.shiftKey && ['I','J','C'].includes(event.key.toUpperCase())) ||
+          (event.ctrlKey && event.key.toUpperCase() === 'U')) {
+        event.preventDefault();
+        alert('Blocked by the organization');
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
