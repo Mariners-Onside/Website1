@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Mariners Onside</title>
+    <style>
+        /* Loader styles */
+        #loader-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;background:linear-gradient(180deg,#001217,#021421);z-index:99999;color:#cffff0}
+        .spinner{width:72px;height:72px;border-radius:50%;border:8px solid rgba(255,255,255,0.08);border-top-color:#00ff9a;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .loader-text{margin-top:12px;font-weight:800}
+
+        :root {
+            color-scheme: dark;
+            --bg-start: #0b1f13;
+            --bg-end: #3a0f19;
+            --surface: rgba(16, 10, 12, 0.88);
+            --surface-strong: rgba(20, 12, 14, 0.96);
+            --accent: #9f0022;
+            --accent-alt: #0c8f36;
+            --text: #f4efe9;
+            --muted: #b9aea9;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text);
+            background: radial-gradient(circle at top left, rgba(12, 143, 54, 0.14), transparent 25%),
+                        linear-gradient(135deg, var(--bg-start), var(--bg-end));
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(159, 0, 34, 0.2), transparent 18%),
+                        radial-gradient(circle at 85% 15%, rgba(12, 143, 54, 0.18), transparent 16%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .page-shell {
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .contact-panel {
+            width: min(1180px, 100%);
+            background: linear-gradient(180deg, rgba(17, 10, 12, 0.95), rgba(12, 5, 8, 0.95));
+            border: 1px solid rgba(159, 0, 34, 0.22);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(18px);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            gap: 2px;
+        }
+
+        .contact-hero,
+        .contact-form-wrap {
+            padding: 3rem;
+            background: rgba(6, 5, 7, 0.95);
+        }
+
+        .contact-hero {
+            border-right: 1px solid rgba(159, 0, 34, 0.18);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent-alt);
+            margin-bottom: 1.5rem;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 42px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-alt), var(--accent));
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: clamp(2.5rem, 4vw, 3.8rem);
+            line-height: 1.02;
+            letter-spacing: -0.04em;
+            max-width: 13ch;
+        }
+
+        .page-copy {
+            margin: 1.75rem 0 2.5rem;
+            color: var(--muted);
+            max-width: 44rem;
+            line-height: 1.9;
+            font-size: 1.02rem;
+        }
+
+        .contact-cards {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .contact-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 24px;
+            padding: 1.35rem 1.4rem;
+            display: grid;
+            gap: 0.55rem;
+        }
+
+        .contact-card h3 {
+            margin: 0 0 0.4rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--accent);
+        }
+
+        .contact-card p,
+        .contact-card a {
+            margin: 0;
+            color: var(--text);
+            font-size: 0.98rem;
+            text-decoration: none;
+        }
+
+        .contact-card a:hover {
+            color: var(--accent-alt);
+        }
+
+        .contact-form-wrap h2 {
+            margin: 0 0 1rem;
+            font-size: clamp(2rem, 3vw, 2.6rem);
+        }
+
+        .contact-form-wrap p {
+            color: var(--muted);
+            margin: 0 0 2rem;
+            line-height: 1.8;
+        }
+
+        .form-field {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .form-field input,
+        .form-field textarea {
+            width: 100%;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 18px;
+            padding: 1rem 1.2rem;
+            background: rgba(255,255,255,0.04);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.25s ease, background 0.25s ease;
+        }
+
+        .form-field input:focus,
+        .form-field textarea:focus {
+            border-color: rgba(159, 0, 34, 0.55);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .form-field textarea {
+            min-height: 160px;
+            resize: vertical;
+        }
+
+        .submit-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .submit-group button {
+            border: 0;
+            border-radius: 999px;
+            padding: 1rem 1.4rem;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #fff;
+            background: linear-gradient(135deg, var(--accent-alt), var(--accent));
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+            box-shadow: 0 20px 45px rgba(12,143,54,0.2);
+        }
+
+        .submit-group button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        .form-note {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .msg {
+            padding: 1rem 1.25rem;
+            border-radius: 18px;
+            margin-bottom: 1.5rem;
+            display: none;
+            font-weight: 600;
+        }
+
+        .success {
+            background: rgba(12, 143, 54, 0.16);
+            border: 1px solid rgba(12, 143, 54, 0.3);
+            color: #d7f8e3;
+        }
+
+        .error {
+            background: rgba(159, 0, 34, 0.14);
+            border: 1px solid rgba(159, 0, 34, 0.3);
+            color: #ffd5db;
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .footer-highlight {
+            color: var(--accent-alt);
+        }
+
+        html, body {
+            width: 100%;
+        }
+
+        @media (max-width: 860px) {
+            .contact-panel {
+                width: 100%;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .contact-hero {
+                border-right: none;
+                border-bottom: 1px solid rgba(159, 0, 34, 0.18);
+            }
+
+            .contact-hero,
+            .contact-form-wrap {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .page-shell {
+                padding: 1rem 0.75rem;
+            }
+
+            .contact-panel {
+                border-radius: 24px;
+            }
+
+            .contact-hero,
+            .contact-form-wrap {
+                padding: 1.5rem;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+                max-width: 100%;
+            }
+
+            .page-copy {
+                font-size: 0.98rem;
+                margin-bottom: 1.75rem;
+            }
+
+            .contact-card {
+                padding: 1rem 1.1rem;
+            }
+
+            .form-field input,
+            .form-field textarea {
+                padding: 0.85rem 1rem;
+                font-size: 0.95rem;
+            }
+
+            .submit-group {
+                gap: 0.85rem;
+            }
+
+            .submit-group button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .contact-hero,
+            .contact-form-wrap {
+                padding: 1.25rem;
+            }
+
+            .eyebrow {
+                font-size: 0.8rem;
+            }
+
+            .form-field input,
+            .form-field textarea {
+                padding: 0.85rem 0.95rem;
+            }
+
+            footer {
+                padding: 0 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="loader-overlay" aria-hidden="false">
+        <div class="spinner" role="img" aria-label="Loading"></div>
+        <div class="loader-text">Loading...</div>
+    </div>
+    <main class="page-shell">
+        <section class="contact-panel">
+            <div class="contact-grid">
+                <div class="contact-hero">
+                    <span class="eyebrow">Contact Mariners Onside</span>
+                    <h1 class="page-title">Reach out for membership, events, and official support.</h1>
+                    <p class="page-copy">Have questions, want to join the club, or need details about our next event? Send us a message and our team will get back to you fast.</p>
+
+                    <div class="contact-cards">
+                        <div class="contact-card">
+                            <h3>Official Email</h3>
+                            <a href="mailto:marinersonsideofficial@gmail.com">marinersonsideofficial@gmail.com</a>
+                        </div>
+                        <div class="contact-card">
+                            <h3>Phone</h3>
+                            <a href="tel:+91700355914">+91 700355914</a>
+                        </div>
+                        <div class="contact-card">
+                            <h3>Club Address</h3>
+                            <p>Chinsuah Mariners Onside Society,Hooghly,West Bengal, India</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrap">
+                    <div id="msg" class="msg"></div>
+                    <h2>Send Us a Message</h2>
+                    <p>Fill out the form and we’ll connect with you about membership, merchandise, and community events.</p>
+
+                    <form action="https://api.web3forms.com/submit" method="POST" id="form">
+                        <input type="hidden" name="access_key" value="e7caeb74-2bf2-4b5a-b57c-14ff16949fbd">
+                        <input type="hidden" name="subject" value="Mariners Onside Contact Request">
+
+                        <div class="form-field">
+                            <input type="text" name="name" placeholder="Your name" required>
+                        </div>
+
+                        <div class="form-field">
+                            <input type="email" name="email" placeholder="Your email" required>
+                        </div>
+
+                        <div class="form-field">
+                            <input type="tel" name="phone" placeholder="Phone number">
+                        </div>
+
+                        <div class="form-field">
+                            <input type="text" name="subject_text" placeholder="Subject" required>
+                        </div>
+
+                        <div class="form-field">
+                            <textarea name="message" placeholder="Your message" required></textarea>
+                        </div>
+
+                        <div class="submit-group">
+                            <button type="submit">Send Message</button>
+                            <p class="form-note">We respect your privacy. No spam, just updates related to your request.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <p>&copy; 2026 Mariners Onside Official Store • All Rights Reserved • Passion Finds Its Home.</p>
+            <p class="footer-highlight">Created by Kanakendu Das — follow us for restocks and drops.</p>
+        </footer>
+    </main>
+
+    <script>
+        const form = document.getElementById('form');
+        const result = document.getElementById('msg');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = form.querySelector('button');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            const fd = new FormData(form);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: fd
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    result.className = 'msg success';
+                    result.textContent = 'Thank you! Your message was sent successfully.';
+                    result.style.display = 'block';
+                    form.reset();
+                } else {
+                    throw new Error(data.message || 'Submission failed.');
+                }
+            })
+            .catch(err => {
+                result.className = 'msg error';
+                result.textContent = err.message || 'Something went wrong. Try again later.';
+                result.style.display = 'block';
+            })
+            .finally(() => {
+                btn.disabled = false;
+                btn.textContent = 'Send Message';
+            });
+        });
+    </script>
+    <script>
+        (function(){
+            const overlay = document.getElementById('loader-overlay');
+            const minMs = 500; const start = Date.now();
+            function hide(){ const wait = Math.max(0, minMs - (Date.now() - start)); setTimeout(()=>{ if(!overlay) return; overlay.style.transition='opacity .4s ease'; overlay.style.opacity='0'; overlay.setAttribute('aria-hidden','true'); setTimeout(()=>overlay.remove(),450); }, wait); }
+            if(document.readyState === 'complete') hide(); else window.addEventListener('load', hide);
+        })();
+    </script>
+  <script>
+    document.addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+      alert('Blocked by the organization');
+    });
+
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'F12' ||
+          (event.ctrlKey && event.shiftKey && ['I','J','C'].includes(event.key.toUpperCase())) ||
+          (event.ctrlKey && event.key.toUpperCase() === 'U')) {
+        event.preventDefault();
+        alert('Blocked by the organization');
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
