@@ -118,27 +118,30 @@
 
         /* STORE HERO */
         .store-hero{
-            background:linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75));
+            background:linear-gradient(135deg,rgba(0,0,0,0.8),rgba(0,0,0,0.7)),linear-gradient(to right,rgba(0,255,170,0.05),rgba(0,136,255,0.05));
             padding:100px 100px;
             text-align:center;
             color:#fff;
-            position: relative; /* Added for absolute positioning */
+            position: relative;
+            border-bottom:3px solid rgba(0,255,0,0.3);
         }
         .store-hero h1{
             font-size:72px;
             letter-spacing:5px;
             text-shadow:0 0 20px #000;
             margin-bottom:20px;
-            position: relative; /* Ensure it's above the logo */
+            position: relative;
             z-index: 2;
+            color:#00ff9a;
         }
         .store-hero p{
             font-size:22px;
             max-width:800px;
             margin:0 auto;
-            opacity:0.9;
-            position: relative; /* Ensure it's above the logo */
+            opacity:0.95;
+            position: relative;
             z-index: 2;
+            color:#eef8f2;
         }
         .hero-logo {
             position: absolute;
@@ -164,8 +167,14 @@
             margin-bottom:60px;
             text-transform:uppercase;
             letter-spacing:3px;
-            color:#00ff00;
-            text-shadow:0 0 15px rgba(0,255,0,0.6);
+            color:#00ff9a;
+            text-shadow:0 0 20px rgba(0,255,170,0.6);
+            font-weight:900;
+            animation: titleGlow 2s ease-in-out infinite;
+        }
+        @keyframes titleGlow{
+            0%, 100%{text-shadow:0 0 15px rgba(0,255,170,0.6);}
+            50%{text-shadow:0 0 30px rgba(0,255,170,0.8);}
         }
         .product-grid{
             display:grid;
@@ -173,19 +182,20 @@
             gap:40px;
         }
         .product{
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            border:1px solid rgba(0,255,170,0.12);
+            background: linear-gradient(180deg, rgba(0,255,170,0.05), rgba(0,136,255,0.03));
+            border:2px solid rgba(0,255,170,0.2);
             border-radius:15px;
             overflow:hidden;
             text-align:center;
             transition:all .4s, transform .35s ease;
-            box-shadow:0 8px 30px rgba(2,10,20,0.6);
+            box-shadow:0 8px 30px rgba(0,255,170,0.15);
             backdrop-filter: blur(4px);
         }
         .product:hover{
-            transform:translateY(-10px) scale(1.01);
-            box-shadow:0 30px 80px rgba(0,40,30,0.6);
-            border-color:rgba(0,255,170,0.3);
+            transform:translateY(-15px) scale(1.02);
+            box-shadow:0 30px 80px rgba(0,255,170,0.3);
+            border-color:rgba(0,255,170,0.5);
+            background: linear-gradient(180deg, rgba(0,255,170,0.08), rgba(0,136,255,0.06));
         }
         .product img{
             display:block;
@@ -196,37 +206,68 @@
             transition:.4s;
             background:#081b1d;
         }
-        .product:hover img{transform:scale(1.08);}
+        .product:hover img{transform:scale(1.1);}
         .product h3{
             font-size:24px;
             padding:20px 15px 10px;
-            color:#00ff00;
+            color:#00ff9a;
+            font-weight:900;
         }
         .product .price{
-            font-size:28px;
+            font-size:32px;
             font-weight:900;
             color:#fff;
             margin:10px 0;
+            text-shadow:0 0 10px rgba(0,255,0,0.4);
         }
         .product .buy-btn{
             display:block;
             width:90%;
             margin:20px auto;
             padding:16px;
-            background:#008631;
-            color:#fff;
+            background: linear-gradient(135deg, #008631, #00ff00);
+            color:#000;
             font-size:20px;
             font-weight:900;
             border:none;
             border-radius:10px;
             cursor:pointer;
             transition:.3s;
-            text-decoration: none; /* Added for link styling */
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(0,255,0,0.4);
         }
         .product .buy-btn:hover{
-            background:#00ff00;
+            background: linear-gradient(135deg, #00ff00, #00ff9a);
             color:#000;
-            transform:scale(1.05);
+            transform:scale(1.08);
+            box-shadow: 0 10px 30px rgba(0,255,170,0.6);
+        }
+        .status-badge{
+            position:absolute;
+            left:12px;
+            top:12px;
+            padding:8px 14px;
+            border-radius:8px;
+            font-weight:900;
+            font-size:14px;
+            text-transform:uppercase;
+            letter-spacing:1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            z-index:10;
+        }
+        .status-available{
+            background: linear-gradient(135deg, #00ff00, #00ff9a);
+            color:#000;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .status-soon{
+            background: linear-gradient(135deg, #bb00ff, #ff00ff);
+            color:#fff;
+            box-shadow: 0 4px 15px rgba(187,0,255,0.5);
+        }
+        @keyframes pulse{
+            0%, 100%{box-shadow: 0 4px 15px rgba(0,255,0,0.4);}
+            50%{box-shadow: 0 4px 25px rgba(0,255,170,0.7);}
         }
 
         /* FOOTER */
@@ -287,38 +328,55 @@
 
     <!-- PRODUCTS -->
     <section class="products-section">
-        <h2 class="section-title">Featured Product</h2>
+        <h2 class="section-title">✨ Featured Products ✨</h2>
         <div class="product-grid" style="justify-items:center;">
-            <!-- Only Home Jersey is available -->
+            <!-- Home Jersey - Available -->
             <div class="product" style="max-width:420px;">
                 <div style="position:relative;">
-                    <span style="position:absolute;left:12px;top:12px;background:#00ff00;color:#000;padding:6px 10px;border-radius:8px;font-weight:900;">AVAILABLE</span>
+                    <span class="status-badge status-available">✓ Stocked Out</span>
                     <img src="jj2.jpeg" alt="Home Jersey 2026">
                 </div>
                 <h3>Home Jersey 2026</h3>
+                <p style="color:#ff00ff;font-size:16px;margin:8px 0;">❌ Currently Unavailable</p>
                 <p class="price">₹499</p>
-                <a href="payment_updated.html" class="buy-btn">BUY NOW</a>
+                <a href="payment_updated.html" class="buy-btn" style="background: linear-gradient(135deg, #bb00ff, #ff00ff);opacity:0.7;cursor:not-allowed;color:#fff;">❌ OUT OF STOCK</a>
             </div>
         </div>
 
         <div class="product-grid" style="justify-items:center;">
-            <!-- Only Home Jersey is available -->
+            <!-- Scarf - Coming Soon -->
             <div class="product" style="max-width:420px;">
                 <div style="position:relative;">
-                    <span style="position:absolute;left:12px;top:12px;background:#00ff00;color:#000;padding:6px 10px;border-radius:8px;font-weight:900;">Comming Soon</span>
+                    <span class="status-badge status-soon">⏰ COMING SOON</span>
                     <img src="scarf2026.jpg" alt="Scarf 2026">
                 </div>
                 <h3>Scarf 2026</h3>
+                <p style="color:#ff00ff;font-size:16px;margin:8px 0;">🌟 Pre-order notification coming soon!</p>
                 <p class="price">₹499</p>
-                <a href="payment_updated.html" class="buy-btn">Comming Soon</a>
+                <a href="payment_updated.html" class="buy-btn" style="background: linear-gradient(135deg, #bb00ff, #ff00ff);opacity:0.7;cursor:not-allowed;color:#fff;">⏳ COMING SOON</a>
             </div>
+        </div>
+        
+        <!-- Stock Status Info -->
+        <div style="margin-top:60px;padding:30px;background:linear-gradient(135deg,rgba(0,255,170,0.08),rgba(0,136,255,0.08));border-left:5px solid #00ff00;border-radius:12px;text-align:center;">
+            <h3 style="color:#00ff9a;font-size:24px;margin-bottom:12px;">📦 Stock Status</h3>
+            <p style="font-size:16px;color:#eef8f2;line-height:1.8;">
+                ✅ <strong>Home Jersey 2026</strong> - Available in limited quantities<br>
+                ⏰ <strong>Scarf 2026</strong> - Coming Soon (Limited Edition Release)<br>
+                <br>
+                <em style="color:#00ff9a;">Don't miss out! Subscribe for notifications on new drops.</em>
+            </p>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer style="background:#111;padding:24px 20px;text-align:center;border-top:3px solid #006400;margin-top:40px;">
-        <p style="font-size:16px;opacity:0.9;line-height:1.8;">&copy; 2026 Mariners Onside Official Store • All Rights Reserved • Passion Finds Its Home Created By • Kanakendu Das</p>
-        <p style="margin-top:8px;opacity:0.8;">Follow us on social for restocks and drops.</p>
+    <footer style="background:linear-gradient(135deg,#111,#1a2a2a);padding:40px 20px;text-align:center;border-top:3px solid #00ff00;margin-top:60px;box-shadow:0 -5px 30px rgba(0,255,0,0.1);">
+        <div style="max-width:1200px;margin:0 auto;">
+            <h3 style="color:#00ff9a;font-size:20px;margin-bottom:15px;">⚽ Mariners Onside Official Store</h3>
+            <p style="font-size:16px;opacity:0.9;line-height:1.8;margin-bottom:15px;">🏆 Premium official merchandise for passionate supporters 🏆<br>&copy; 2026 Mariners Onside Official Store • All Rights Reserved</p>
+            <p style="opacity:0.8;margin-bottom:15px;">👕 Quality. Pride. Performance. 👕<br>Created with ❤️ by Kanakendu Das</p>
+            <p style="font-size:14px;opacity:0.7;border-top:1px solid rgba(0,255,0,0.2);padding-top:15px;margin-top:15px;">Follow us on social for exclusive drops, restocks, and special announcements!</p>
+        </div>
     </footer>
 
     <!-- Mobile Dropdown Script -->
